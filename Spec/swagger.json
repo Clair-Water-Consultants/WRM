@@ -1,0 +1,605 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Water Resource Management API",
+        "description": "Water Resource Management API",
+        "version": "1.0.0"
+    },
+    "host": "localhost",
+    "schemes": [
+        "https"
+    ],
+    "basePath": "/v1",
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/elements": {
+            "get": {
+                "summary": "Water Elements",
+                "description": "The elements enpoint returns the list of water elements in the system. The response would include unique identifier of the element, element name, units, max min limits\n",
+                "tags": [
+                    "Elements"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of elements",
+                        "schema": {
+                            "$ref": "#/definitions/ElementListResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "upon error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Add a water element",
+                "description": "This endpint adds a new water element to the system. It accepts a json which would include element name, units, description, max min limits and would return a unique identifier of the element upon success\n",
+                "tags": [
+                    "Elements"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "request object of an element",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ElementRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "upon successful creation of an element",
+                        "schema": {
+                            "$ref": "#/definitions/ElementPostResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "upon error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/bays": {
+            "get": {
+                "summary": "Bays",
+                "description": "The elements enpoint returns the list of bays per group in the system. The response would include unique identifier of the bay, bay name, group id of the group the bay belongs\n",
+                "tags": [
+                    "Bays"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of elements",
+                        "schema": {
+                            "$ref": "#/definitions/BayListResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "upon error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Add a bay",
+                "description": "This endpint adds a new bay to the system. It accepts a json which would include bay name, group id and would return a unique identifier of the bay upon success\n",
+                "tags": [
+                    "Bays"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "request object of the bay",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/BayRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "upon successful creation of a bay",
+                        "schema": {
+                            "$ref": "#/definitions/BayPostResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "upon error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/watertypes": {
+            "get": {
+                "summary": "Water types available",
+                "description": "The elements enpoint returns the list of water types in the system. The response would include unique identifier of the type, the type and description of the water type\n",
+                "tags": [
+                    "WaterTypes"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "group_id",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "bay_id",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of elements",
+                        "schema": {
+                            "$ref": "#/definitions/WaterTypeListResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "upon error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Add a water type",
+                "description": "This endpint adds a new water type to the system. It accepts a json which would include water type name, description and would return a unique identifier of the water type upon success\n",
+                "tags": [
+                    "WaterTypes"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "request object of the water type",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/WaterRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "upon successful creation of a water type",
+                        "schema": {
+                            "$ref": "#/definitions/WaterPostResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "upon error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/wrmdata/{group_id}": {
+            "get": {
+                "summary": "WRM Data to be retrieved",
+                "description": "Obtain the history of WRM data for a given groupid, userid and chemical id for a given period of time and granularity\n",
+                "tags": [
+                    "WRMData"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "group_id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "element_id",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "bay_id",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "granularity",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "timeperiod",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of WRM Data",
+                        "schema": {
+                            "$ref": "#/definitions/WRMDataListResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "upon error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/wrmdata": {
+            "post": {
+                "summary": "Add a wrm data type",
+                "description": "This endpint adds a new wrm data type to the system. It accepts a json which would include wrm data type name, description and would return a unique identifier of the wrm data type upon success\n",
+                "tags": [
+                    "WRMData"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "request object of the wrmdata type",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/WRMDataRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "upon successful creation of a wrmdata type",
+                        "schema": {
+                            "$ref": "#/definitions/WRMDataPostResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "upon error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "WRMDataListResponse": {
+            "type": "object",
+            "properties": {
+                "wrmdata": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/WRMDataResponse"
+                    }
+                }
+            }
+        },
+        "WRMDataResponse": {
+            "type": "object",
+            "properties": {
+                "userId": {
+                    "type": "string",
+                    "description": "unique identifier of the user"
+                },
+                "groupId": {
+                    "type": "string",
+                    "description": "unique identifier of the group"
+                },
+                "bayId": {
+                    "type": "string",
+                    "description": "unique identifier of the bay"
+                },
+                "waterId": {
+                    "type": "string",
+                    "description": "name of the water type"
+                },
+                "elementId": {
+                    "type": "string",
+                    "description": "name of the element"
+                },
+                "elementValue": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "value of element measured"
+                },
+                "criteria": {
+                    "type": "string"
+                }
+            }
+        },
+        "WRMDataRequest": {
+            "type": "object",
+            "properties": {
+                "userId": {
+                    "type": "string",
+                    "description": "unique identifier of the user"
+                },
+                "bayId": {
+                    "type": "string",
+                    "description": "unique identifier of the bay"
+                },
+                "waterId": {
+                    "type": "string",
+                    "description": "name of the water type"
+                },
+                "elementId": {
+                    "type": "string",
+                    "description": "name of the element"
+                },
+                "elementValue": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "value of element measured"
+                },
+                "criteria": {
+                    "type": "string",
+                    "description": "sample values for time of data entry"
+                },
+                "timeCreated": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "date and time of record captured"
+                }
+            }
+        },
+        "WRMDataPostResponse": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "description": "status of wrmdata insert operation"
+                }
+            }
+        },
+        "WaterTypeListResponse": {
+            "type": "object",
+            "properties": {
+                "watertype": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/WaterTypeResponse"
+                    }
+                }
+            }
+        },
+        "WaterTypeResponse": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "unique identifier of the water type"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "name of the water type"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "description of the water type"
+                }
+            }
+        },
+        "WaterRequest": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "name of the element"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "unit of the element"
+                }
+            }
+        },
+        "WaterPostResponse": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "unique identifier of the added element"
+                }
+            }
+        },
+        "ElementListResponse": {
+            "type": "object",
+            "properties": {
+                "elements": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ElementResponse"
+                    }
+                }
+            }
+        },
+        "ElementRequest": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "name of the element"
+                },
+                "units": {
+                    "type": "string",
+                    "description": "unit of the element"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "description of the element"
+                },
+                "lowerLimit": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "lower limit of the measured element"
+                },
+                "upperLimit": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "lower limit of the measured element"
+                }
+            }
+        },
+        "ElementPostResponse": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "unique identifier of the added element"
+                }
+            }
+        },
+        "ElementResponse": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "unique identifier of the element"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "name of the element"
+                },
+                "units": {
+                    "type": "string",
+                    "description": "unit of the element"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "description of the element"
+                },
+                "lowerLimit": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "lower limit of the measured element"
+                },
+                "upperLimit": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "lower limit of the measured element"
+                }
+            }
+        },
+        "BayListResponse": {
+            "type": "object",
+            "properties": {
+                "bays": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/BayResponse"
+                    }
+                }
+            }
+        },
+        "BayRequest": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "name of the bay"
+                },
+                "groupId": {
+                    "type": "string",
+                    "description": "id of the group the bay belongs to"
+                }
+            }
+        },
+        "BayPostResponse": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "unique identifier of the added bay"
+                }
+            }
+        },
+        "BayResponse": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "unique identifier of the bay"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "name of the bay"
+                },
+                "groupId": {
+                    "type": "string",
+                    "description": "group id the bay belongs to"
+                }
+            }
+        },
+        "Error": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "fields": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
