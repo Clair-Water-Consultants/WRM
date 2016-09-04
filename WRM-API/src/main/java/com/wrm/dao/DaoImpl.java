@@ -46,6 +46,7 @@ public class DaoImpl {
 		if(session!=null){
 			session.getTransaction().commit();
 			session.close();
+			session = null;
 		}
 	}
 	
