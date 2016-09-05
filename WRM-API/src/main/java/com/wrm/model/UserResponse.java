@@ -1,5 +1,6 @@
 package com.wrm.model;
 
+import java.util.Date;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -30,9 +31,9 @@ public class UserResponse   {
 
   private String emailId = null;
 
-  private DateTime createdTime = null;
+  private Date createdTime = null;
 
-  private DateTime updatedTime = null;
+  private Date updatedTime = null;
 
   public UserResponse id(String id) {
     this.id = id;
@@ -160,7 +161,7 @@ public class UserResponse   {
     this.emailId = emailId;
   }
 
-  public UserResponse createdTime(DateTime createdTime) {
+  public UserResponse createdTime(Date createdTime) {
     this.createdTime = createdTime;
     return this;
   }
@@ -170,15 +171,15 @@ public class UserResponse   {
    * @return createdTime
   **/
   @ApiModelProperty(value = "time when the user is added to database")
-  public DateTime getCreatedTime() {
+  public Date getCreatedTime() {
     return createdTime;
   }
 
-  public void setCreatedTime(DateTime createdTime) {
+  public void setCreatedTime(Date createdTime) {
     this.createdTime = createdTime;
   }
 
-  public UserResponse updatedTime(DateTime updatedTime) {
+  public UserResponse updatedTime(Date updatedTime) {
     this.updatedTime = updatedTime;
     return this;
   }
@@ -188,11 +189,11 @@ public class UserResponse   {
    * @return updatedTime
   **/
   @ApiModelProperty(value = "time this user row is recently updated")
-  public DateTime getUpdatedTime() {
+  public Date getUpdatedTime() {
     return updatedTime;
   }
 
-  public void setUpdatedTime(DateTime updatedTime) {
+  public void setUpdatedTime(Date updatedTime) {
     this.updatedTime = updatedTime;
   }
 

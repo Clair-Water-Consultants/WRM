@@ -23,11 +23,11 @@ public class Water {
 
 	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
 	@Column(name = "CREATED_TIME")
-	Date createdTime;
+	Date createdTime = new Date();
 
 	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
 	@Column(name = "UPDATED_TIME")
-	Date updatedTime;
+	Date updatedTime = new Date();
 
 	public String getId() {
 		return id;

@@ -8,6 +8,9 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.xml.bind.DatatypeConverter;
 
+import com.wrm.api.Constants;
+
+
 public class SecurityHelper {
 
 	@SuppressWarnings("serial")
@@ -35,6 +38,8 @@ public class SecurityHelper {
 	public static final String PBKDF2_ALGORITHM = "PBKDF2WithHmacSHA1";
 
 	// These constants may be changed without breaking existing hashes.
+	public static final String WRM_COOKIE_NAME = "_wrm";
+	public static final long TOKEN_EXPIRY = Constants.SESSION_MAX_AGE * 1000L;
 	public static final int SALT_BYTE_SIZE = 24;
 	public static final int HASH_BYTE_SIZE = 18;
 	public static final int PBKDF2_ITERATIONS = 64000;
@@ -46,7 +51,24 @@ public class SecurityHelper {
 	public static final int HASH_SIZE_INDEX = 2;
 	public static final int SALT_INDEX = 3;
 	public static final int PBKDF2_INDEX = 4;
+	
+	private static String createToken(String userId, String groupId, String agentHost, Long lastLoggedInTime) {
+		return userId + "|" + groupId + "|" + agentHost + "|" + String.valueOf(lastLoggedInTime);
+	}
+	
+	public static boolean validateToken(String userId, String groupId, String agentHost, Long lastLoggedInTime, String activeToken) {
+		return createToken(userId, groupId, agentHost, lastLoggedInTime).equalsIgnoreCase(new String(fromBase64(activeToken)));
+	}
+	
+	public static String parseSessionToken(String sessionToken) {
+		return new String(fromBase64(sessionToken));
+	}
 
+	public static String generateSessionToken(String userId, String groupId, String agentHost, Long lastLoggedInTime) throws CannotPerformOperationException {
+		String token = createToken(userId, groupId, agentHost, lastLoggedInTime);
+		return toBase64(token.getBytes());
+	}
+	
 	public static String createHash(String password) throws CannotPerformOperationException {
 		return createHash(password.toCharArray());
 	}

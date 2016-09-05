@@ -1,6 +1,9 @@
 package com.wrm.api;
 
 import java.util.List;
+import java.util.UUID;
+
+import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -74,11 +77,27 @@ public class WatertypesApiController implements WatertypesApi {
 
     public ResponseEntity<WaterPostResponse> watertypesPost(
 
-@ApiParam(value = "request object of the water type" ,required=true ) @RequestBody WaterRequest body
+@ApiParam(value = "request object of the water type" ,required=true ) @Valid @RequestBody WaterRequest body
 
 ) {
-        // do some magic!
-        return new ResponseEntity<WaterPostResponse>(HttpStatus.OK);
+    	String uniqueId = UUID.randomUUID().toString();
+		WaterDaoImpl dao= new WaterDaoImpl();
+    	try{
+    		Water water = dao.findByName(body.getName());
+    		if ( water != null )
+    			return new ResponseEntity<WaterPostResponse>(HttpStatus.CONFLICT);
+    	    water = new Water();
+    	    water.setId(uniqueId);
+    		water.setDescription(body.getDescription());
+    		water.setType(body.getName());
+    		dao.persist(water);
+    		
+    	}
+    	finally{
+    		dao.closeCurrentSessionWithTransaction();
+    	}
+        
+        return ResponseEntity.ok(new WaterPostResponse(uniqueId));
     }
 
 }

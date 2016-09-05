@@ -17,6 +17,10 @@ import io.swagger.annotations.ApiModelProperty;
 public class WaterPostResponse   {
   private String id = null;
 
+  public WaterPostResponse (String id) {
+	    this.id = id;
+	  }
+  
   public WaterPostResponse id(String id) {
     this.id = id;
     return this;

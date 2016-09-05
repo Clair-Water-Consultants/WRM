@@ -20,6 +20,15 @@ public class Error   {
   private String message = null;
 
   private String fields = null;
+  
+  public Error (String message){
+	  this.message = message;
+  }
+  
+  public Error (String message, Integer code){
+	  this.message = message;
+	  this.code = code;
+  }
 
   public Error code(Integer code) {
     this.code = code;

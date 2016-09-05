@@ -1,5 +1,8 @@
 package com.wrm.api;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,5 +51,38 @@ public interface UserApi {
 @ApiParam(value = "request object of an element" ,required=true ) @RequestBody UserRequest body
 
 );
+    @ApiOperation(value = "Authenticate a user", notes = "This endpoint adds authenticates a user of a given group", response = UserPostResponse.class, tags={ "User", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 201, message = "upon successful authentication of a user", response = UserPostResponse.class),
+        @ApiResponse(code = 200, message = "upon error", response = UserPostResponse.class) })
+    @RequestMapping(value = "/user/login",
+        produces = { "application/json" }, 
+        consumes = { "application/json" },
+        method = RequestMethod.PUT)
+    ResponseEntity<UserPostResponse> userLogin(
+    		HttpServletRequest req,
+    		HttpServletResponse res,
+    		@ApiParam(value = "", required = true) @RequestParam(value = "groupId", required = true) String groupId,
+    		@ApiParam(value = "", required = true) @RequestParam(value = "userId", required = true) String userId,
+    		@ApiParam(value = "", required = true) @RequestParam(value = "p", required = true) String pass
+
+);
+    
+    @ApiOperation(value = "LogOut a user", notes = "This endpoint logs out a user of a given group", response = UserPostResponse.class, tags={ "User", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 201, message = "upon successful logging out a user", response = UserPostResponse.class),
+        @ApiResponse(code = 200, message = "upon error", response = UserPostResponse.class) })
+    @RequestMapping(value = "/user/logout",
+        produces = { "application/json" }, 
+        consumes = { "application/json" },
+        method = RequestMethod.PUT)
+    ResponseEntity<UserPostResponse> userLogOut(
+    		HttpServletRequest req,
+    		HttpServletResponse res,
+    		@ApiParam(value = "", required = true) @RequestParam(value = "groupId", required = true) String groupId,
+    		@ApiParam(value = "", required = true) @RequestParam(value = "userId", required = true) String userId
+); 
+
+
 
 }

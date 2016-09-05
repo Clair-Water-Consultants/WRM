@@ -1,6 +1,11 @@
 package com.wrm.model;
 
 import java.util.Objects;
+
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
@@ -15,8 +20,10 @@ import io.swagger.annotations.ApiModelProperty;
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2016-08-28T09:50:20.362Z")
 
 public class WaterRequest   {
+	@NotNull(message = "name is required") @NotEmpty(message = "name cannot be empty")
   private String name = null;
 
+	@NotNull(message = "description is required") @NotEmpty(message = "description cannot be empty")
   private String description = null;
 
   public WaterRequest name(String name) {

@@ -12,7 +12,8 @@ public class WaterDaoImpl extends DaoImpl implements DaoInterface<Water, String>
 	private static final String FIND_ALL_ELEMENTS = "from WaterBayAssociation";
 	private static final String FIND_ALL_ASSOCIATION = "select assoc from WaterBayAssociation assoc, Bay bay, Water water"
       + " where bay.id = assoc.primary.bay.id and  water.id = assoc.primary.water.id and assoc.primary.bay.groupId = :groupId  and assoc.primary.bay.id = :bayId";
-
+	private static final String FIND_BY_NAME = "from Water where type = :name";
+	
 	@Override
 	public String persist(Water entity) {
 		getCurrentSessionWithTransaction().save(entity);
@@ -72,5 +73,11 @@ public class WaterDaoImpl extends DaoImpl implements DaoInterface<Water, String>
 	@Override
 	public void deleteAll() {
 		// Method not implemented, Not sure
+	}
+
+	public Water findByName(String name) {
+		// TODO Auto-generated method stub
+		Water entity = (Water) getCurrentSessionWithTransaction().createQuery(FIND_BY_NAME).setParameter("name", name).uniqueResult();
+		return entity;
 	}
 }
