@@ -6,6 +6,7 @@ import com.wrm.dao.DaoImpl;
 import com.wrm.dao.DaoInterface;
 import com.wrm.dao.model.Water;
 import com.wrm.dao.model.WaterBayAssociation;
+import com.wrm.dao.model.WaterElementAssociation;
 
 public class WaterDaoImpl extends DaoImpl implements DaoInterface<Water, String> {
 
@@ -18,6 +19,16 @@ public class WaterDaoImpl extends DaoImpl implements DaoInterface<Water, String>
 	public String persist(Water entity) {
 		getCurrentSessionWithTransaction().save(entity);
 		return entity.getId();
+	}
+	
+	public String persistWaterBay(WaterBayAssociation entity) {
+		getCurrentSessionWithTransaction().save(entity);
+		return entity.getPrimary().getWater().getId();
+	}
+	
+	public String persistWaterElement(WaterElementAssociation entity) {
+		getCurrentSessionWithTransaction().save(entity);
+		return entity.getPrimary().getWater().getId();
 	}
 
 	@Override

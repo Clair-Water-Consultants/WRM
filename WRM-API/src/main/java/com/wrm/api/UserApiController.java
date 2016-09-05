@@ -1,6 +1,5 @@
 package com.wrm.api;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -99,20 +98,16 @@ public class UserApiController implements UserApi {
 				UserResponse response = new UserResponse();
 				BeanUtils.copyProperties(userEntity, response);
 				response.setPass(null);
-				//Date date = Calendar.getInstance().getTime();
 				Date date = new Date();
 				userEntity.setUpdatedTime(date);
 				userDao.update(userEntity);
 				UserDaoImpl.closeCurrentSessionWithTransaction();
 				userEntity = userDao.findById(userEntity.getId());
-				System.out.println(userEntity.getUpdatedTime()+","+userEntity.getUpdatedTime().getTime());
 				String sessionToken = SecurityHelper.generateSessionToken(userEntity.getName(), userEntity.getGroupId(),
 						req.getRemoteAddr(), userEntity.getUpdatedTime().getTime());
-				System.out.println("SESSION TOKEN IN COOKIE :: "+sessionToken);
 				Cookie[] cookies = req.getCookies();
 				Cookie wrmCookie = null;
-				if( cookies != null )
-				{
+				if (cookies != null) {
 					for (Cookie c : cookies) {
 						if (c.getName().equalsIgnoreCase(SecurityHelper.WRM_COOKIE_NAME)) {
 							wrmCookie = c;
@@ -120,8 +115,8 @@ public class UserApiController implements UserApi {
 						}
 					}
 				}
-				if(wrmCookie != null) {
-					//set the new sessionToken and invalidate an older one
+				if (wrmCookie != null) {
+					// set the new sessionToken and invalidate an older one
 					wrmCookie.setValue(sessionToken);
 					res.addCookie(wrmCookie);
 				} else {
@@ -139,7 +134,7 @@ public class UserApiController implements UserApi {
 			return new ResponseEntity<UserPostResponse>(HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	public ResponseEntity<UserPostResponse> userLogOut(HttpServletRequest req, HttpServletResponse res,
 			@ApiParam(value = "", required = true) @RequestParam(value = "groupId", required = true) String groupId,
 			@ApiParam(value = "", required = true) @RequestParam(value = "user", required = true) String userId) {
@@ -152,12 +147,12 @@ public class UserApiController implements UserApi {
 		userEntity.setUpdatedTime(null);
 		userDao.update(userEntity);
 		UserDaoImpl.closeCurrentSessionWithTransaction();
-		//reset session cookie on logout
+		// reset session cookie on logout
 		Cookie wrmCookie = new Cookie(SecurityHelper.WRM_COOKIE_NAME, null);
 		wrmCookie.setHttpOnly(true);
 		wrmCookie.setMaxAge(0);
 		res.addCookie(wrmCookie);
-			return ResponseEntity.ok(new UserPostResponse(userEntity.getId()));
+		return ResponseEntity.ok(new UserPostResponse(userEntity.getId()));
 	}
-	
+
 }

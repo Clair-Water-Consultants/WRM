@@ -1,7 +1,11 @@
 package com.wrm.api;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -52,8 +56,16 @@ public class ElementsApiController implements ElementsApi {
 @ApiParam(value = "request object of an element" ,required=true ) @RequestBody ElementRequest body
 
 ) {
-        // do some magic!
-        return new ResponseEntity<ElementPostResponse>(HttpStatus.OK);
+    	Element e = new Element();
+    	Date date = Calendar.getInstance().getTime();
+    	BeanUtils.copyProperties(body, e);
+    	e.setCreatedTime(date);
+    	e.setUpdatedTime(date);
+    	e.setId(UUID.randomUUID().toString());
+    	ElementDaoImpl eDao = new ElementDaoImpl();
+    	eDao.persist(e);
+    	ElementDaoImpl.closeCurrentSessionWithTransaction();
+    	return ResponseEntity.ok(new ElementPostResponse(e.getId()));
     }
 
 }

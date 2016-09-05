@@ -1,9 +1,6 @@
 package com.wrm.api;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +13,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import com.wrm.dao.impl.UserDaoImpl;
@@ -47,13 +43,11 @@ public class ApiOriginFilter implements javax.servlet.Filter {
 			}
 			if (currentCookie == null) {
 				res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-				//res.sendRedirect("/v1/user/login");
 				return;
 			}
 			String sessionToken = SecurityHelper.parseSessionToken(currentCookie.getValue());
 			if (sessionToken == null || sessionToken.equals("")) {
 				res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-				//res.sendRedirect("/v1/user/login");
 				return;
 			}
 			String[] creds = sessionToken.split("\\|");
@@ -66,13 +60,7 @@ public class ApiOriginFilter implements javax.servlet.Filter {
 				return;
 			}
 			User currentUser = userList.get(0);
-			SimpleDateFormat sdfDate = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy");
-			Calendar cal = Calendar.getInstance();
 			Date lastLoggedInTime = currentUser.getUpdatedTime();
-			System.out.println(lastLoggedInTime+","+lastLoggedInTime.getTime());
-			//cal.setTimeInMillis(lastLoggedInTime.getTime());
-			//cal.set(Calendar.MILLISECOND, 0);
-			
 			if (lastLoggedInTime == null) {
 				res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 				return;
@@ -89,13 +77,11 @@ public class ApiOriginFilter implements javax.servlet.Filter {
 					return;
 				}
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
 			if ((System.currentTimeMillis() - lastLoggedInTime.getTime()) > SecurityHelper.TOKEN_EXPIRY) {
 				res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-				//res.sendRedirect("/v1/user/login");
 				return;
 			}
 		}

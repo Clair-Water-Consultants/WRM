@@ -16,6 +16,10 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class ElementPostResponse   {
   private String id = null;
+  
+  public ElementPostResponse(String id) {
+	  this.id = id;
+  }
 
   public ElementPostResponse id(String id) {
     this.id = id;

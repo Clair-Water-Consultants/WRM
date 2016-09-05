@@ -34,6 +34,7 @@
 		<mapping class="com.wrm.dao.model.CompanyGroup" />
 		<mapping class="com.wrm.dao.model.Water" />
 		<mapping class="com.wrm.dao.model.WaterBayAssociation" />
+		<mapping class="com.wrm.dao.model.WaterElementAssociation" />
 		<mapping class="com.wrm.dao.model.User" />
 	</session-factory>
 

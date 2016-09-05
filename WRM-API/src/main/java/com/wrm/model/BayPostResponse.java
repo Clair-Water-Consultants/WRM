@@ -17,6 +17,10 @@ import io.swagger.annotations.ApiModelProperty;
 public class BayPostResponse   {
   private String id = null;
 
+  public BayPostResponse(String id) {
+	  this.id = id;
+  }
+  
   public BayPostResponse id(String id) {
     this.id = id;
     return this;

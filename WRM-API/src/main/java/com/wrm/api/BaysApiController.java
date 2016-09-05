@@ -1,8 +1,10 @@
 package com.wrm.api;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -48,7 +50,16 @@ public class BaysApiController implements BaysApi {
 			@ApiParam(value = "request object of the bay", required = true) @RequestBody BayRequest body
 
 	) {
-		// do some magic!
-		return new ResponseEntity<BayPostResponse>(HttpStatus.OK);
+		Date date = Calendar.getInstance().getTime();
+		Bay b = new Bay();
+		b.setId(UUID.randomUUID().toString());
+		b.setName(body.getName());
+		b.setGroupId(body.getGroupId());
+		b.setCreatedTime(date);
+		b.setUpdatedTime(date);
+		BayDaoImpl daoInterface = new BayDaoImpl();
+		daoInterface.persist(b);
+		BayDaoImpl.closeCurrentSessionWithTransaction();
+		return ResponseEntity.ok(new BayPostResponse(b.getId()));
 	}
 }
