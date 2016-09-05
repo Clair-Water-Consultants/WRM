@@ -30,6 +30,7 @@ public class ApiOriginFilter implements javax.servlet.Filter {
 		res.addHeader("Access-Control-Allow-Origin", "*");
 		res.addHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");
 		res.addHeader("Access-Control-Allow-Headers", "Content-Type");
+		System.out.println("API Oring FilTERRRRRRRRRRRRRRRRRR");
 		if (!req.getRequestURI().equals("/v1/user/login") && !req.getRequestURI().equals("/v1/user/logout")) {
 			Cookie currentCookie = null;
 			Cookie[] cookies = req.getCookies();

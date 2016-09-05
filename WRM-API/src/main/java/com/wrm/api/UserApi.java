@@ -33,9 +33,20 @@ public interface UserApi {
         method = RequestMethod.GET)
     ResponseEntity<UserListResponse> userGet(
     		@ApiParam(value = "", required = true) @RequestParam(value = "groupId", required = true) String groupId,
-    		@ApiParam(value = "", required = true) @RequestParam(value = "userId", required = true) String userId,
-    		@ApiParam(value = "", required = true) @RequestParam(value = "p", required = true) String pass
+    		@ApiParam(value = "", required = true) @RequestParam(value = "userId", required = true) String userId
     		);
+    
+    @ApiOperation(value = "WRM user find All get request", notes = "This end point is used to perform user related activities of WRM ", response = UserListResponse.class, tags={ "User", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "An array of users", response = UserListResponse.class),
+        @ApiResponse(code = 200, message = "upon error", response = UserListResponse.class) })
+    @RequestMapping(value = "/user/all",
+        produces = { "application/json" }, 
+        method = RequestMethod.GET)
+    ResponseEntity<UserListResponse> userGetAll(
+    		@ApiParam(value = "", required = true) @RequestParam(value = "groupId", required = true) String groupId
+    		);
+    		
 
 
     @ApiOperation(value = "Add a user", notes = "This endpoint adds a new user to the user table ", response = UserPostResponse.class, tags={ "User", })

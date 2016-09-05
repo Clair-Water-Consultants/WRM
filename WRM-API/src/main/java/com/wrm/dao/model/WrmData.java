@@ -3,18 +3,12 @@ package com.wrm.dao.model;
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
-import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.NotEmpty;
-import org.joda.time.DateTime;
 
 @Entity
 @Table(name = "wrm_data")
@@ -42,12 +36,18 @@ public class WrmData {
 	private String criteria = null;
 	
 	@Column(name = "created_time")
-	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
+	//@Temporal(javax.persistence.TemporalType.TIMESTAMP)
 	private Date timeCreated = new Date();
 	
 	@Column(name = "updated_time")
-	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
+	//@Temporal(javax.persistence.TemporalType.TIMESTAMP)
 	private Date timeUpdated = new Date();
+	
+	/*@Temporal(javax.persistence.TemporalType.TIMESTAMP)
+	private Date newTimeUpdated = new Date();
+	
+	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
+	private Date newTimeCreated = new Date();*/
 
 	
 
@@ -125,7 +125,23 @@ public class WrmData {
 	public void setElementId(String elementId) {
 		this.elementId = elementId;
 	}
+	
+	/*public Date getNewTimeCreated() {
+		return newTimeCreated;
+	}
 
+	public void setNewTimeCreated(Date newTimeCreated) {
+		this.newTimeCreated = newTimeCreated;
+	}
+	
+	public Date getNewTimeUpdated() {
+		return newTimeUpdated;
+	}
+
+	public void setNewTimeUpdated(Date newTimeUpdated) {
+		this.newTimeUpdated = newTimeUpdated;
+	}
+*/
 	@Override
 	public String toString() {
 		return "WrmData [id=" + id + ", userId=" + userId + ", bayId=" + bayId + ", waterId=" + waterId + ", elementId="

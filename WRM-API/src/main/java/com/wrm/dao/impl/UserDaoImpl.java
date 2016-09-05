@@ -9,7 +9,8 @@ import com.wrm.dao.model.User;
 
 public class UserDaoImpl extends DaoImpl implements DaoInterface<User, String> {
 
-	private static final String FIND_ALL_ELEMENTS = "from User";
+	private static final String FIND_ALL_USERS = "from User";
+	private static final String FIND_ALL_USERS_BY_GROUPID = "from User where group_id=:groupId";
 	private static final String FIND_BY_USERID = "from User where name = :userId and group_id = :groupId";
 
 	@Override
@@ -51,7 +52,14 @@ public class UserDaoImpl extends DaoImpl implements DaoInterface<User, String> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> findAll() {
-		List<User> entities = (List<User>) getCurrentSessionWithTransaction().createQuery(FIND_ALL_ELEMENTS).list();
+		List<User> entities = (List<User>) getCurrentSessionWithTransaction().createQuery(FIND_ALL_USERS).list();
+		return entities;
+	}
+	
+	public List<User> findAllByGroupId(String groupId) {
+		List<User> entities = (List<User>) getCurrentSessionWithTransaction().createQuery(FIND_ALL_USERS_BY_GROUPID)
+				.setParameter("groupId", groupId)
+				.list();
 		return entities;
 	}
 

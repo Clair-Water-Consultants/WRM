@@ -34,10 +34,14 @@ public class UserApiController implements UserApi {
 
 	public ResponseEntity<UserListResponse> userGet(
 			@ApiParam(value = "", required = true) @RequestParam(value = "groupId", required = true) String groupId,
-			@ApiParam(value = "", required = true) @RequestParam(value = "user", required = true) String userId,
-			@ApiParam(value = "", required = true) @RequestParam(value = "p", required = true) String pass) {
-
+			@ApiParam(value = "", required = true) @RequestParam(value = "user", required = true) String userId) {
 		// get user for given userId and then authenticate
+		if(groupId == null || groupId.equalsIgnoreCase("")) {
+			return new ResponseEntity<UserListResponse>(HttpStatus.BAD_REQUEST);
+		}
+		if(userId == null || userId.equalsIgnoreCase("")) {
+			return new ResponseEntity<UserListResponse>(HttpStatus.BAD_REQUEST);
+		}
 		UserDaoImpl userDao = new UserDaoImpl();
 		List<User> userList = userDao.findByUserId(userId, groupId);
 		if (userList != null && userList.size() > 1) {
@@ -45,18 +49,33 @@ public class UserApiController implements UserApi {
 		}
 		User userEntity = userList.get(0);
 		try {
-			if (SecurityHelper.verifyPassword(pass, userEntity.getPass())) {
-				UserResponse response = new UserResponse();
-				BeanUtils.copyProperties(userEntity, response);
-				response.setPass(null);
-				return ResponseEntity.ok(new UserListResponse().addUserItem(response));
-			} else {
-				return new ResponseEntity<UserListResponse>(HttpStatus.FORBIDDEN);
-			}
-		} catch (InvalidHashException e) {
-			return new ResponseEntity<UserListResponse>(HttpStatus.FORBIDDEN);
-		} catch (CannotPerformOperationException cnoe) {
+			UserResponse response = new UserResponse();
+			BeanUtils.copyProperties(userEntity, response);
+			response.setPass(null);
+			return ResponseEntity.ok(new UserListResponse().addUserItem(response));
+		} catch (Exception e) {
+			return new ResponseEntity<UserListResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	public ResponseEntity<UserListResponse> userGetAll(
+			@ApiParam(value = "", required = true) @RequestParam(value = "groupId", required = true) String groupId) {
+		if(groupId == null || groupId.equalsIgnoreCase("")) {
 			return new ResponseEntity<UserListResponse>(HttpStatus.BAD_REQUEST);
+		}
+		UserDaoImpl userDao = new UserDaoImpl();
+		List<User> userList = userDao.findAllByGroupId(groupId);
+		try {
+			UserListResponse userResponse = new UserListResponse();
+			for(User user : userList) {
+				UserResponse response = new UserResponse();
+				BeanUtils.copyProperties(user, response);
+				response.setPass(null);
+				userResponse.addUserItem(response);
+			}
+			return ResponseEntity.ok(userResponse);
+		} catch (Exception e) {
+			return new ResponseEntity<UserListResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -89,10 +108,12 @@ public class UserApiController implements UserApi {
 		// get user for given userId and then authenticate
 		UserDaoImpl userDao = new UserDaoImpl();
 		List<User> userList = userDao.findByUserId(userId, groupId);
+		System.out.println("USER ID lIST :: "+userList);
 		if (userList != null && userList.size() > 1) {
 			return new ResponseEntity<UserPostResponse>(HttpStatus.FORBIDDEN);
 		}
 		User userEntity = userList.get(0);
+		System.out.println("USER ENTITY :: "+userEntity);
 		try {
 			if (SecurityHelper.verifyPassword(pass, userEntity.getPass())) {
 				UserResponse response = new UserResponse();
@@ -115,14 +136,19 @@ public class UserApiController implements UserApi {
 						}
 					}
 				}
+				System.out.println("WRM COOKIE :: "+sessionToken);
 				if (wrmCookie != null) {
 					// set the new sessionToken and invalidate an older one
 					wrmCookie.setValue(sessionToken);
 					res.addCookie(wrmCookie);
+					System.out.println("WRM COOKIE IF:: "+sessionToken);
 				} else {
 					wrmCookie = new Cookie(SecurityHelper.WRM_COOKIE_NAME, sessionToken);
 					wrmCookie.setMaxAge(Constants.SESSION_MAX_AGE);
+					wrmCookie.setPath("/");
+					wrmCookie.setHttpOnly(true);
 					res.addCookie(wrmCookie);
+					System.out.println("WRM COOKIE ELSE:: "+sessionToken);
 				}
 				return ResponseEntity.ok(new UserPostResponse(userEntity.getId(), userEntity.getGroupId()));
 			} else {

@@ -7,17 +7,11 @@
 
 	<session-factory>
 
-        <!-- Database connection settings -->
-        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/clairwat_clair</property>
-        <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.connection.password">root</property>
-        
-        <property name="connection.pool_size">3</property>
-   <property name="hbm2ddl.auto">update</property>
-   <property name="connection.show_sql">true</property>
-   <property name="current_session_context_class">thread</property>
-   <property name="connection.zeroDateTimeBehavior">convertToNull</property>
+		<!-- Database connection settings -->
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/clairwat_clair</property>
+		<property name="hibernate.connection.username">root</property>
+		<property name="hibernate.connection.password">root</property>
 
 		<property name="connection.pool_size">3</property>
 		<property name="hbm2ddl.auto">update</property>
@@ -25,8 +19,16 @@
 		<property name="current_session_context_class">thread</property>
 		<property name="connection.zeroDateTimeBehavior">convertToNull</property>
 
+		<property name="connection.pool_size">3</property>
+		<property name="hbm2ddl.auto">update</property>
+		<property name="connection.show_sql">true</property>
+
+		<property name="current_session_context_class">thread</property>
+		<property name="connection.zeroDateTimeBehavior">convertToNull</property>
+
 		<!-- SQL dialect -->
 		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+		<property name="show_sql">true</property>
 		<!-- Specify session context -->
 		<property name="hibernate.current_session_context_class">org.hibernate.context.internal.ThreadLocalSessionContext</property>
 		<mapping class="com.wrm.dao.model.Bay" />

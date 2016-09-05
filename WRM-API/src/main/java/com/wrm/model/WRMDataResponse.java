@@ -1,5 +1,6 @@
 package com.wrm.model;
 
+import java.util.Date;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -25,9 +26,13 @@ public class WRMDataResponse   {
 
   private String elementId = null;
 
-  private Float elementValue = null;
+  private Double elementValue = null;
 
   private String criteria = null;
+  
+  private Date timeCreated;
+  
+  private Date timeUpdated;
 
   public WRMDataResponse userId(String userId) {
     this.userId = userId;
@@ -119,7 +124,7 @@ public class WRMDataResponse   {
     this.elementId = elementId;
   }
 
-  public WRMDataResponse elementValue(Float elementValue) {
+  public WRMDataResponse elementValue(Double elementValue) {
     this.elementValue = elementValue;
     return this;
   }
@@ -129,11 +134,11 @@ public class WRMDataResponse   {
    * @return elementValue
   **/
   @ApiModelProperty(value = "value of element measured")
-  public Float getElementValue() {
+  public Double getElementValue() {
     return elementValue;
   }
 
-  public void setElementValue(Float elementValue) {
+  public void setElementValue(Double elementValue) {
     this.elementValue = elementValue;
   }
 
@@ -155,8 +160,24 @@ public class WRMDataResponse   {
     this.criteria = criteria;
   }
 
+  
+  public Date getTimeCreated() {
+	return timeCreated;
+}
 
-  @Override
+public void setTimeCreated(Date timeCreated) {
+	this.timeCreated = timeCreated;
+}
+
+public Date getTimeUpdated() {
+	return timeUpdated;
+}
+
+public void setTimeUpdated(Date timeUpdated) {
+	this.timeUpdated = timeUpdated;
+}
+
+@Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
