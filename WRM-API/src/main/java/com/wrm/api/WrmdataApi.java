@@ -30,15 +30,15 @@ public interface WrmdataApi {
         produces = { "application/json" }, 
         method = RequestMethod.GET)
     ResponseEntity<WRMDataListResponse> wrmdataGroupIdGet(
-@ApiParam(value = "",required=true ) @PathVariable("groupId") String groupId
-
+@ApiParam(value = "",required=true ) @PathVariable("userId") String userId
 
 ,@ApiParam(value = "", required = true) @RequestParam(value = "elementId", required = true) String elementId
 
 
 
-,@ApiParam(value = "", required = true) @RequestParam(value = "bayId", required = true) String bayId
+,@ApiParam(value = "", required = true) @RequestParam(value = "ctId", required = true) String ctId
 
+, @ApiParam(value = "", required = true) @RequestParam(value = "waterId", required = true) String waterId
 
 
 ,@ApiParam(value = "") @RequestParam(value = "granularity", required = false) String granularity

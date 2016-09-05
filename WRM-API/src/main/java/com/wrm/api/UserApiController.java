@@ -79,7 +79,7 @@ public class UserApiController implements UserApi {
 		}
 		userDao.persist(user);
 		UserDaoImpl.closeCurrentSessionWithTransaction();
-		return ResponseEntity.ok(new UserPostResponse(uniqueUserId));
+		return ResponseEntity.ok(new UserPostResponse(uniqueUserId, user.getGroupId()));
 	}
 
 	public ResponseEntity<UserPostResponse> userLogin(HttpServletRequest req, HttpServletResponse res,
@@ -124,7 +124,7 @@ public class UserApiController implements UserApi {
 					wrmCookie.setMaxAge(Constants.SESSION_MAX_AGE);
 					res.addCookie(wrmCookie);
 				}
-				return ResponseEntity.ok(new UserPostResponse(userEntity.getId()));
+				return ResponseEntity.ok(new UserPostResponse(userEntity.getId(), userEntity.getGroupId()));
 			} else {
 				return new ResponseEntity<UserPostResponse>(HttpStatus.FORBIDDEN);
 			}
@@ -152,7 +152,7 @@ public class UserApiController implements UserApi {
 		wrmCookie.setHttpOnly(true);
 		wrmCookie.setMaxAge(0);
 		res.addCookie(wrmCookie);
-		return ResponseEntity.ok(new UserPostResponse(userEntity.getId()));
+		return ResponseEntity.ok(new UserPostResponse(userEntity.getId(), userEntity.getGroupId()));
 	}
 
 }

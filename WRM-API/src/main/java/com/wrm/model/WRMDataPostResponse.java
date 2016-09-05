@@ -17,6 +17,10 @@ import io.swagger.annotations.ApiModelProperty;
 public class WRMDataPostResponse   {
   private String status = null;
 
+  public WRMDataPostResponse (String status) {
+	    this.status = status;
+	  }
+  
   public WRMDataPostResponse status(String status) {
     this.status = status;
     return this;

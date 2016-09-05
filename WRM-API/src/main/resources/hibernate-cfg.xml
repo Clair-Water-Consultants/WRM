@@ -36,6 +36,7 @@
 		<mapping class="com.wrm.dao.model.WaterBayAssociation" />
 		<mapping class="com.wrm.dao.model.WaterElementAssociation" />
 		<mapping class="com.wrm.dao.model.User" />
+		<mapping class="com.wrm.dao.model.WrmData" />
 	</session-factory>
 
 </hibernate-configuration>

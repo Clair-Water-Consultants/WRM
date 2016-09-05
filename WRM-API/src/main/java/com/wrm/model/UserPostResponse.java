@@ -15,14 +15,18 @@ import io.swagger.annotations.ApiModelProperty;
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2016-09-04T10:25:35.178Z")
 
 public class UserPostResponse   {
-  private String id = null;
+  
+private String id = null;
+  private String groupId = null;
 
-  public UserPostResponse(String id) {
+  public UserPostResponse(String id, String groupId) {
 	    this.id = id;
+	    this.groupId = groupId;
 }
   
-  public UserPostResponse id(String id) {
+  public UserPostResponse id(String id, String groupId) {
     this.id = id;
+    this.groupId = groupId;
     return this;
   }
 
@@ -38,6 +42,16 @@ public class UserPostResponse   {
   public void setId(String id) {
     this.id = id;
   }
+  
+  @ApiModelProperty(value = "unique identifier of the added user group")
+  public String getGroupId() {
+	  return groupId;
+  }
+
+  public void setGroupId(String groupId) {
+	  this.groupId = groupId;
+  }
+
 
 
   @Override
