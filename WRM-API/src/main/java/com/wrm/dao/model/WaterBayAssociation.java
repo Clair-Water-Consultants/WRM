@@ -15,12 +15,12 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 
 @Entity
-@Table(name = "BAY_WATER_ASSOCIATION")
+@Table(name = "CT_WATER_ASSOCIATION")
 @AssociationOverrides( {
     @AssociationOverride(name = "primary.water",
         joinColumns = @JoinColumn(name = "WATER_ID")),
     @AssociationOverride(name = "primary.bay",
-        joinColumns = @JoinColumn(name = "BAY_ID"))})
+        joinColumns = @JoinColumn(name = "CT_ID"))})
 public class WaterBayAssociation {
 	@Embeddable
 	public static class Primary implements java.io.Serializable {

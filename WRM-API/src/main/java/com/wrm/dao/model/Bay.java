@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 
 @Entity
-@Table(name = "BAY")
+@Table(name = "CT")
 public class Bay {
 	
 	@Id
