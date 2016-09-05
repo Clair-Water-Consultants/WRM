@@ -7,7 +7,9 @@
 		"8288fc02-4748-72d2-443b-f164dc5130aa",
 		"afad07c1-1e91-65ae-6d87-4d17fbc1fad7",
 		"2b44bff6-d508-c061-1c2f-78e84fb3851a",
-		"2e964225-1a27-cd34-b5f3-065f665829bb"
+		"2e964225-1a27-cd34-b5f3-065f665829bb",
+		"0adea2aa-2607-8831-445d-234caca7d50f",
+		"47d6da80-dcc1-8830-e157-d85753a87800"
 	],
 	"folders": [],
 	"timestamp": 1472397598993,
@@ -15,6 +17,27 @@
 	"public": false,
 	"published": false,
 	"requests": [
+		{
+			"id": "0adea2aa-2607-8831-445d-234caca7d50f",
+			"headers": "Content-Type: application/json\n",
+			"url": "http://localhost:8080/v1/user/login?user=madhuisti&p=madhuisti&groupId=83586755-6c39-11e6-b652-f81654bab016",
+			"pathVariables": {},
+			"preRequestScript": null,
+			"method": "PUT",
+			"collectionId": "77a2c437-4561-782c-ecec-5644e1f9b368",
+			"data": [],
+			"dataMode": "raw",
+			"name": "PUT User Login",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1473060916620,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": ""
+		},
 		{
 			"id": "2b44bff6-d508-c061-1c2f-78e84fb3851a",
 			"headers": "",
@@ -55,6 +78,26 @@
 			"currentHelper": "normal",
 			"helperAttributes": {},
 			"rawModeData": "{\n  \"name\": \"madhuisti\",\n  \"pass\": \"madhuisti\",\n  \"groupId\": \"83586755-6c39-11e6-b652-f81654bab016\",\n  \"firstName\": \"madhu\",\n  \"lastName\": \"isti\",\n  \"emailId\": \"misti@gmail.com\"\n}"
+		},
+		{
+			"id": "47d6da80-dcc1-8830-e157-d85753a87800",
+			"headers": "Content-Type: application/json\n",
+			"url": "http://localhost:8080/v1/user/logout?user=madhuisti&groupId=83586755-6c39-11e6-b652-f81654bab016",
+			"pathVariables": {},
+			"preRequestScript": null,
+			"method": "PUT",
+			"collectionId": "77a2c437-4561-782c-ecec-5644e1f9b368",
+			"data": null,
+			"dataMode": "params",
+			"name": "PUT User LogOut",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1473060931875,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {}
 		},
 		{
 			"id": "76299490-f78e-2856-fdd0-7a7af00a48e8",
