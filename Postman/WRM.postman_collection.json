@@ -12,7 +12,9 @@
 		"47d6da80-dcc1-8830-e157-d85753a87800",
 		"fc49df67-d388-2ec9-912b-d303bc1bcbbf",
 		"3709472f-e390-31c2-be59-3ca54c96aeec",
-		"07d5883c-982d-61f8-3af8-4b0e4634c475"
+		"07d5883c-982d-61f8-3af8-4b0e4634c475",
+		"bc63703e-2484-649f-8d99-920ea4762dca",
+		"4cc849cb-6bf8-3a96-aa94-1c59a9a66ca0"
 	],
 	"folders": [],
 	"timestamp": 1472397598993,
@@ -143,6 +145,26 @@
 			"helperAttributes": {}
 		},
 		{
+			"id": "4cc849cb-6bf8-3a96-aa94-1c59a9a66ca0",
+			"headers": "Cookie: _wrm=bWFkaHVpc3RpfDgzNTg2NzU1LTZjMzktMTFlNi1iNjUyLWY4MTY1NGJhYjAxNnwwOjA6MDowOjA6MDowOjF8MTQ3MzA2NDU4NjAwMA==\n",
+			"url": "http://localhost:8080/v1/wrmdata/83586755-6c39-11e6-b652-f81654bab016?userId=7cddbfb3-3b58-492e-8d93-c73130c6bb77&ctId=d11da240-6c3a-11e6-b652-f81654bab016&waterId=4e61ea70-6c36-11e6-b652-f81654bab016&elementId=166d565c-6c36-11e6-b652-f81654bab016&granularity=1&timeperiod=30",
+			"pathVariables": {},
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "77a2c437-4561-782c-ecec-5644e1f9b368",
+			"data": null,
+			"dataMode": "params",
+			"name": "GET WRMList",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1473099209837,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
 			"id": "76299490-f78e-2856-fdd0-7a7af00a48e8",
 			"headers": "Content-Type: application/json\n",
 			"url": "http://localhost:8080/v1/bays",
@@ -203,25 +225,43 @@
 			"helperAttributes": {}
 		},
 		{
-			"id": "fc49df67-d388-2ec9-912b-d303bc1bcbbf",
-			"headers": "Cookie: _wrm=bWFkaHVpc3RpfDgzNTg2NzU1LTZjMzktMTFlNi1iNjUyLWY4MTY1NGJhYjAxNnwwOjA6MDowOjA6MDowOjF8MTQ3MzA2NDU4NjAwMA==\nContent-Type: application/json\n",
-			"url": "http://localhost:8080/v1/elements",
+			"id": "bc63703e-2484-649f-8d99-920ea4762dca",
+			"headers": "Content-Type: application/json\n",
+			"url": "http://localhost:8080/v1/wrmdata",
 			"pathVariables": {},
 			"preRequestScript": null,
 			"method": "POST",
 			"collectionId": "77a2c437-4561-782c-ecec-5644e1f9b368",
 			"data": [],
 			"dataMode": "raw",
-			"name": "POST Element",
+			"name": "POST WRMData",
 			"description": "",
 			"descriptionFormat": "html",
-			"time": 1473066083074,
+			"time": 1473097178170,
 			"version": 2,
 			"responses": [],
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"rawModeData": "{\n    \"name\": \"new elment\",\n    \"units\": \"kg\",\n    \"description\": \"test description\",\n    \"lowerLimit\": \"10\",\n    \"upperLimit\": \"20\"\n}"
+			"rawModeData": "{\n    \"userId\": \"7cddbfb3-3b58-492e-8d93-c73130c6bb77\",\n    \"bayId\": \"d11da240-6c3a-11e6-b652-f81654bab016\",\n    \"waterId\": \"4e61ea70-6c36-11e6-b652-f81654bab016\",\n    \"elementId\": \"166d565c-6c36-11e6-b652-f81654bab016\",\n    \"elementValue\": 20,\n    \"timeCreated\": \"2016-09-03 00:00:00\",\n    \"criteria\": \"test\"\n}"
+		},
+		{
+			"id": "fc49df67-d388-2ec9-912b-d303bc1bcbbf",
+			"headers": "Cookie: _wrm=bWFkaHVpc3RpfDgzNTg2NzU1LTZjMzktMTFlNi1iNjUyLWY4MTY1NGJhYjAxNnwwOjA6MDowOjA6MDowOjF8MTQ3MzA2NDU4NjAwMA==\nContent-Type: application/json\n",
+			"url": "http://localhost:8080/v1/watertypes/bays?ctId=7b0c3988-ee9e-453c-bbf4-f53dfe3ce7ac&waterId=4e61ea70-6c36-11e6-b652-f81654bab016",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "POST",
+			"data": [],
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1473097241465,
+			"name": "POST Element",
+			"description": "",
+			"collectionId": "77a2c437-4561-782c-ecec-5644e1f9b368",
+			"responses": []
 		}
 	]
 }

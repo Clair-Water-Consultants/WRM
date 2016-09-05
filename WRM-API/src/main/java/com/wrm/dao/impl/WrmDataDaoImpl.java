@@ -14,7 +14,7 @@ public class WrmDataDaoImpl extends DaoImpl implements DaoInterface<WrmData, Str
 			+ "and bay_id=:ctId "
 			+ "and water_id=:waterId "
 			+ "and element_id=:elementId "
-			+ "created_time between now() - interval :timeperiod day and now() "
+			+ "and created_time between :startDate and :endDate "
 			+ "order by created_time desc";
 			
 
@@ -55,13 +55,14 @@ public class WrmDataDaoImpl extends DaoImpl implements DaoInterface<WrmData, Str
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<WrmData> findByFilters(String userId, String ctId, String waterId, String elementId, int timeperiod) {
+	public List<WrmData> findByFilters(String userId, String ctId, String waterId, String elementId, String startDate, String endDate) {
 		List<WrmData> entities = (List<WrmData>) getCurrentSessionWithTransaction().createQuery(FIND_BY_FILTER)
 				.setParameter("userId", userId)
 				.setParameter("ctId", ctId)
 				.setParameter("waterId", waterId)
 				.setParameter("elementId", elementId)
-				.setParameter("timeperiod", timeperiod)
+				.setParameter("startDate", startDate)
+				.setParameter("endDate", endDate)
 				.list();
 		return entities;
 	}

@@ -26,11 +26,13 @@ public interface WrmdataApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "An array of WRM Data", response = WRMDataListResponse.class),
         @ApiResponse(code = 200, message = "upon error", response = WRMDataListResponse.class) })
-    @RequestMapping(value = "/wrmdata/{group_id}",
+    @RequestMapping(value = "/wrmdata/{groupId}",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
     ResponseEntity<WRMDataListResponse> wrmdataGroupIdGet(
-@ApiParam(value = "",required=true ) @PathVariable("userId") String userId
+@ApiParam(value = "",required=true ) @PathVariable("groupId") String groupId
+
+,@ApiParam(value = "",required=true ) @RequestParam("userId") String userId
 
 ,@ApiParam(value = "", required = true) @RequestParam(value = "elementId", required = true) String elementId
 

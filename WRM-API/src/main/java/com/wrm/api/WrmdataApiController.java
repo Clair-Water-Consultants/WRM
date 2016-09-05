@@ -2,6 +2,7 @@ package com.wrm.api;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -30,7 +31,9 @@ import io.swagger.annotations.ApiParam;
 public class WrmdataApiController implements WrmdataApi {
 
 	public ResponseEntity<WRMDataListResponse> wrmdataGroupIdGet(
-			@ApiParam(value = "", required = true) @PathVariable("userId") String userId
+			@ApiParam(value = "", required = true) @PathVariable("groupId") String groupId
+			
+	,@ApiParam(value = "", required = true) @RequestParam("userId") String userId
 
 	, @ApiParam(value = "", required = true) @RequestParam(value = "elementId", required = true) String elementId
 
@@ -44,11 +47,19 @@ public class WrmdataApiController implements WrmdataApi {
 
 	) {
 		WrmDataDaoImpl wrmDao = new WrmDataDaoImpl();
-		List<WrmData> wrmList = wrmDao.findByFilters(userId, ctId, waterId, elementId, Integer.valueOf(timeperiod));
+		Date endCal = Calendar.getInstance().getTime();
+		Calendar startCal = Calendar.getInstance();
+		startCal.add(Calendar.DAY_OF_MONTH, (-1 * Integer.valueOf(timeperiod)));
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String startDate = sdf.format(startCal.getTime());
+		String endDate = sdf.format(endCal);
+		List<WrmData> wrmList = wrmDao.findByFilters(userId, ctId, waterId, elementId, startDate, endDate);
 		WRMDataListResponse response = new WRMDataListResponse();
 		for(WrmData w : wrmList) {
+			System.out.println(w);
 			WRMDataResponse wrmResponse = new WRMDataResponse();
 			BeanUtils.copyProperties(w, wrmResponse);
+			wrmResponse.setGroupId(groupId);
 			response.addWrmdataItem(wrmResponse);
 		}
 		return ResponseEntity.ok(response);
