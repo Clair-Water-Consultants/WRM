@@ -1,7 +1,6 @@
 package com.wrm.api;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -33,7 +32,7 @@ public class WrmdataApiController implements WrmdataApi {
 	public ResponseEntity<WRMDataListResponse> wrmdataGroupIdGet(
 			@ApiParam(value = "", required = true) @PathVariable("groupId") String groupId
 
-	, @ApiParam(value = "", required = true) @RequestParam("userId") String userId
+	,@ApiParam(value = "", required = true) @RequestParam("userId") String userId
 
 	, @ApiParam(value = "", required = true) @RequestParam(value = "elementId", required = true) String elementId
 

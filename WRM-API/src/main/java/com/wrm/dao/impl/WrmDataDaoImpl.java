@@ -26,7 +26,6 @@ public class WrmDataDaoImpl extends DaoImpl implements DaoInterface<WrmData, Str
 			+ " from wrm_data where DATE_FORMAT(created_time, '%Y-%m-%d %H:%i:%s') between :startDate and :endDate and "
 			+ " user_id=:userId and bay_id=:bayId and water_id=:waterId and element_id=:elementId "
 			+ " group by DATE_FORMAT(created_time, '%m-%d-%Y') order by DATE_FORMAT(created_time, '%m-%d-%Y') desc";
-					
 
 	@Override
 	public String persist(WrmData entity) {

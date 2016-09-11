@@ -10,19 +10,16 @@
 		<!-- Database connection settings -->
 		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
 		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/clairwat_clair</property>
-		<property name="hibernate.connection.username">root</property>
-		<property name="hibernate.connection.password">root</property>
+		<property name="hibernate.connection.username">clairwat_root</property>
+		<property name="hibernate.connection.password">Jghb%4efhd7%4d</property>
 
 		<property name="connection.pool_size">3</property>
 		<property name="hbm2ddl.auto">update</property>
 		<property name="connection.show_sql">true</property>
 		<property name="current_session_context_class">thread</property>
 		<property name="connection.zeroDateTimeBehavior">convertToNull</property>
-
-		<property name="connection.pool_size">3</property>
 		<property name="hbm2ddl.auto">update</property>
 		<property name="connection.show_sql">true</property>
-
 		<property name="current_session_context_class">thread</property>
 		<property name="connection.zeroDateTimeBehavior">convertToNull</property>
 
@@ -40,5 +37,4 @@
 		<mapping class="com.wrm.dao.model.User" />
 		<mapping class="com.wrm.dao.model.WrmData" />
 	</session-factory>
-
 </hibernate-configuration>
