@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 
 @Entity
-@Table(name = "ELEMENT")
+@Table(name = "element")
 public class Element {
 	@Id
 	@Column(name = "ID")

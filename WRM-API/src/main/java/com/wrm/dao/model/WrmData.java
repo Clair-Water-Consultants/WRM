@@ -11,7 +11,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 
 @Entity
-@Table(name = "wrm_data")
+@Table(name = "clair_data")
 public class WrmData {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

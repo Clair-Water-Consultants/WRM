@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 
 @Entity
-@Table(name = "ct_bay_water_association")
+@Table(name = "ct_water_association")
 @AssociationOverrides( {
     @AssociationOverride(name = "primary.water",
         joinColumns = @JoinColumn(name = "WATER_ID")),

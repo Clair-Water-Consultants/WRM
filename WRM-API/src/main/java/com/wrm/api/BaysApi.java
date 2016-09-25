@@ -1,13 +1,17 @@
 package com.wrm.api;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.wrm.model.BayListResponse;
 import com.wrm.model.BayPostResponse;
 import com.wrm.model.BayRequest;
+import com.wrm.model.BayWaterElementsListResponse;
+import com.wrm.model.WaterTypeListResponse;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -29,6 +33,16 @@ public interface BaysApi {
         method = RequestMethod.GET)
     ResponseEntity<BayListResponse> baysGet();
 
+	@ApiOperation(value = "Bay -> Water -> Elements Associaton", notes = "The enpoint returns the list of bays, their water types and associated elements in the system. The response would include unique identifier of the type, the type and description of the water type ", response = BayWaterElementsListResponse.class, tags = {
+			"BayWaterElements", })
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "An array of elements", response = BayWaterElementsListResponse.class),
+			@ApiResponse(code = 200, message = "upon error", response = WaterTypeListResponse.class) })
+	@RequestMapping(value = "/association/{groupId}", produces = { "application/json" }, method = RequestMethod.GET)
+	ResponseEntity<BayWaterElementsListResponse> watertypesGet(
+			@ApiParam(value = "", required = true) @PathVariable("groupId") String groupId
+
+	);
 
     @ApiOperation(value = "Add a bay", notes = "This endpint adds a new bay to the system. It accepts a json which would include bay name, group id and would return a unique identifier of the bay upon success ", response = BayPostResponse.class, tags={ "Bays", })
     @ApiResponses(value = { 

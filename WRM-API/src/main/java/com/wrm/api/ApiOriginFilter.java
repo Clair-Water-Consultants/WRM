@@ -12,7 +12,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
+//import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.stereotype.Component;
 
 import com.wrm.dao.impl.UserDaoImpl;
@@ -30,8 +31,9 @@ public class ApiOriginFilter implements javax.servlet.Filter {
 		res.addHeader("Access-Control-Allow-Origin", "*");
 		res.addHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");
 		res.addHeader("Access-Control-Allow-Headers", "Content-Type");
-		System.out.println("API Oring FilTERRRRRRRRRRRRRRRRRR");
-		if (!req.getRequestURI().equals("/v1/user/login") && !req.getRequestURI().equals("/v1/user/logout")) {
+		System.out.println("API Origin FILTERRRRRRRRRRRRRRRRRR");
+/*		if (!req.getRequestURI().contains("/v1/user/login") && !req.getRequestURI().contains("/v1/user/logout")) {
+			System.out.println("Inside Non-Login Flow...");
 			Cookie currentCookie = null;
 			Cookie[] cookies = req.getCookies();
 			if (cookies != null) {
@@ -42,15 +44,18 @@ public class ApiOriginFilter implements javax.servlet.Filter {
 					}
 				}
 			}
+			System.out.println("Check 1...");
 			if (currentCookie == null) {
 				res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 				return;
 			}
+			System.out.println("Check 2...");
 			String sessionToken = SecurityHelper.parseSessionToken(currentCookie.getValue());
 			if (sessionToken == null || sessionToken.equals("")) {
 				res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 				return;
 			}
+			System.out.println("Check 3...");
 			String[] creds = sessionToken.split("\\|");
 			String userId = creds[0];
 			String groupId = creds[1];
@@ -60,23 +65,27 @@ public class ApiOriginFilter implements javax.servlet.Filter {
 				res.setStatus(HttpServletResponse.SC_FORBIDDEN);
 				return;
 			}
+			System.out.println("Check 4...");
 			User currentUser = userList.get(0);
 			Date lastLoggedInTime = currentUser.getUpdatedTime();
 			if (lastLoggedInTime == null) {
 				res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 				return;
 			}
+			System.out.println("Check 5...");
 
 			if (currentCookie == null || currentCookie.getValue().equals("")) {
 				res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 				return;
 			}
+			System.out.println("Check 6...");
 			try {
 				if (!SecurityHelper.validateToken(currentUser.getName(), currentUser.getGroupId(), req.getRemoteAddr(),
 						currentUser.getUpdatedTime().getTime(), currentCookie.getValue())) {
 					res.setStatus(HttpServletResponse.SC_FORBIDDEN);
 					return;
 				}
+				System.out.println("Check 7...");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -85,7 +94,9 @@ public class ApiOriginFilter implements javax.servlet.Filter {
 				res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 				return;
 			}
-		}
+			System.out.println("Check 8...");
+		}*/
+		System.out.println("Surpassed cookie checks...");
 		chain.doFilter(request, response);
 	}
 
