@@ -22,6 +22,8 @@ public class BayWaterElementsResponse   {
 	private String elementId = null;
 
 	private String groupId = null;
+	
+	private String userId = null;
 
 	public String getCtId() {
 		return ctId;
@@ -51,6 +53,11 @@ public class BayWaterElementsResponse   {
 		this.groupId = groupId;
 		return this;
 	}
+	
+	public BayWaterElementsResponse userId(String userId) {
+		this.userId = userId;
+		return this;
+	}
 
 	/**
 	 * group id the bay belongs to
@@ -63,6 +70,15 @@ public class BayWaterElementsResponse   {
 
 	public void setGroupId(String groupId) {
 		this.groupId = groupId;
+	}
+	
+	@ApiModelProperty(value = "user id the bay belongs to")
+	public String getUserId() {
+		return userId;
+	}
+	
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 
@@ -78,12 +94,13 @@ public class BayWaterElementsResponse   {
 		return Objects.equals(this.ctId, bayResponse.ctId) &&
 				Objects.equals(this.waterId, bayResponse.waterId) &&
 				Objects.equals(this.elementId, bayResponse.elementId) &&
-				Objects.equals(this.groupId, bayResponse.groupId);
+				Objects.equals(this.groupId, bayResponse.groupId) &&
+				Objects.equals(this.userId, bayResponse.userId);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(ctId, waterId, elementId, groupId);
+		return Objects.hash(ctId, waterId, elementId, groupId, userId);
 	}
 
 	@Override
@@ -95,6 +112,7 @@ public class BayWaterElementsResponse   {
 		sb.append("    waterId: ").append(toIndentedString(waterId)).append("\n");
 		sb.append("    elementId: ").append(toIndentedString(elementId)).append("\n");
 		sb.append("    groupId: ").append(toIndentedString(groupId)).append("\n");
+		sb.append("    userId: ").append(toIndentedString(userId)).append("\n");
 		sb.append("}");
 		return sb.toString();
 	}

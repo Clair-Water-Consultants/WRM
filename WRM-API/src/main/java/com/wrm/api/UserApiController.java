@@ -57,7 +57,39 @@ public class UserApiController implements UserApi {
 			return new ResponseEntity<UserListResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
+	public ResponseEntity<UserListResponse> userDetailsGet(HttpServletRequest req) {
+		Cookie currentCookie = null;
+		Cookie[] cookies = req.getCookies();
+		if (cookies != null) {
+			for (Cookie c : cookies) {
+				if (c.getName().equalsIgnoreCase(SecurityHelper.WRM_COOKIE_NAME)) {
+					currentCookie = c;
+					break;
+				}
+			}
+		}
+		String sessionToken = SecurityHelper.parseSessionToken(currentCookie.getValue());
+		String[] creds = sessionToken.split("\\|");
+		String userId = creds[0];
+		String groupId = creds[1];
+		UserDaoImpl daoImpl = new UserDaoImpl();
+		List<User> userList = daoImpl.findByUserId(userId, groupId);
+		if (userList != null && userList.size() > 1) {
+			return new ResponseEntity<UserListResponse>(HttpStatus.FORBIDDEN);
+		}
+		User userEntity = userList.get(0);
+		try {
+			UserResponse response = new UserResponse();
+			BeanUtils.copyProperties(userEntity, response);
+			response.setPass(null);
+			return ResponseEntity.ok(new UserListResponse().addUserItem(response));
+		} catch (Exception e) {
+			return new ResponseEntity<UserListResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+	}
+
 	public ResponseEntity<UserListResponse> userGetAll(
 			@ApiParam(value = "", required = true) @RequestParam(value = "groupId", required = true) String groupId) {
 		if(groupId == null || groupId.equalsIgnoreCase("")) {
@@ -105,6 +137,7 @@ public class UserApiController implements UserApi {
 			@ApiParam(value = "", required = true) @RequestParam(value = "groupId", required = true) String groupId,
 			@ApiParam(value = "", required = true) @RequestParam(value = "user", required = true) String userId,
 			@ApiParam(value = "", required = true) @RequestParam(value = "p", required = true) String pass) {
+		System.out.println("Inside UserLogin Flow...");
 		// get user for given userId and then authenticate
 		UserDaoImpl userDao = new UserDaoImpl();
 		List<User> userList = userDao.findByUserId(userId, groupId);
@@ -124,6 +157,7 @@ public class UserApiController implements UserApi {
 				userDao.update(userEntity);
 				UserDaoImpl.closeCurrentSessionWithTransaction();
 				userEntity = userDao.findById(userEntity.getId());
+				System.out.println("remote addr: " + req.getRemoteAddr());
 				String sessionToken = SecurityHelper.generateSessionToken(userEntity.getName(), userEntity.getGroupId(),
 						req.getRemoteAddr(), userEntity.getUpdatedTime().getTime());
 				Cookie[] cookies = req.getCookies();
@@ -138,6 +172,8 @@ public class UserApiController implements UserApi {
 				}
 				System.out.println("WRM COOKIE :: "+sessionToken);
 				if (wrmCookie != null) {
+					wrmCookie.setPath("/");
+					wrmCookie.setMaxAge(Constants.SESSION_MAX_AGE);
 					// set the new sessionToken and invalidate an older one
 					wrmCookie.setValue(sessionToken);
 					res.addCookie(wrmCookie);
@@ -146,7 +182,7 @@ public class UserApiController implements UserApi {
 					wrmCookie = new Cookie(SecurityHelper.WRM_COOKIE_NAME, sessionToken);
 					wrmCookie.setMaxAge(Constants.SESSION_MAX_AGE);
 					wrmCookie.setPath("/");
-					wrmCookie.setHttpOnly(true);
+					//wrmCookie.setHttpOnly(true);
 					res.addCookie(wrmCookie);
 					System.out.println("WRM COOKIE ELSE:: "+sessionToken);
 				}
@@ -174,10 +210,24 @@ public class UserApiController implements UserApi {
 		userDao.update(userEntity);
 		UserDaoImpl.closeCurrentSessionWithTransaction();
 		// reset session cookie on logout
-		Cookie wrmCookie = new Cookie(SecurityHelper.WRM_COOKIE_NAME, null);
-		wrmCookie.setHttpOnly(true);
-		wrmCookie.setMaxAge(0);
-		res.addCookie(wrmCookie);
+		Cookie[] cookies = req.getCookies();
+		Cookie wrmCookie = null;
+		if (cookies != null) {
+			for (Cookie c : cookies) {
+				if (c.getName().equalsIgnoreCase(SecurityHelper.WRM_COOKIE_NAME)) {
+					wrmCookie = c;
+					break;
+				}
+			}
+		}
+		if (wrmCookie != null) {
+			// set the new sessionToken and invalidate an older one
+			wrmCookie.setValue(null);
+			wrmCookie.setMaxAge(0);
+			wrmCookie.setPath("/");
+			//res.addCookie(wrmCookie);
+
+		}
 		return ResponseEntity.ok(new UserPostResponse(userEntity.getId(), userEntity.getGroupId()));
 	}
 

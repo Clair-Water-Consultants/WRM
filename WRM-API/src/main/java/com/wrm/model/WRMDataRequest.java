@@ -25,7 +25,7 @@ public class WRMDataRequest {
 
 	@NotNull(message = "bay id cannot be null")
 	@NotEmpty(message = "bay id cannot be empty")
-	private String bayId = null;
+	private String ctId = null;
 
 	@NotNull(message = "water id cannot be null")
 	@NotEmpty(message = "water id cannot be empty")
@@ -42,6 +42,13 @@ public class WRMDataRequest {
 	private String criteria = null;
 
 	private String timeCreated = null;
+
+	private String bayId = null;
+	
+	@NotNull(message = "group id cannot be null")
+	@NotEmpty(message = "group id cannot be empty")
+	private String groupId = null;
+
 
 	public WRMDataRequest userId(String userId) {
 		this.userId = userId;
@@ -81,6 +88,26 @@ public class WRMDataRequest {
 		this.bayId = bayId;
 	}
 
+
+	@ApiModelProperty(value = "unique identifier of the bay")
+	public String getCtId() {
+		return ctId;
+	}
+
+	public void setCtId(String ctId) {
+		this.ctId = ctId;
+	}
+	
+	
+	@ApiModelProperty(value = "unique identifier of the group")
+	public String getGroupId() {
+		return groupId;
+	}
+
+	public void setGroupId(String groupId) {
+		this.groupId = groupId;
+	}
+	
 	public WRMDataRequest waterId(String waterId) {
 		this.waterId = waterId;
 		return this;
@@ -186,6 +213,7 @@ public class WRMDataRequest {
 		}
 		WRMDataRequest wRMDataRequest = (WRMDataRequest) o;
 		return Objects.equals(this.userId, wRMDataRequest.userId) && Objects.equals(this.bayId, wRMDataRequest.bayId)
+				&& Objects.equals(this.ctId, wRMDataRequest.ctId)
 				&& Objects.equals(this.waterId, wRMDataRequest.waterId)
 				&& Objects.equals(this.elementId, wRMDataRequest.elementId)
 				&& Objects.equals(this.elementValue, wRMDataRequest.elementValue)
@@ -205,6 +233,7 @@ public class WRMDataRequest {
 
 		sb.append("    userId: ").append(toIndentedString(userId)).append("\n");
 		sb.append("    bayId: ").append(toIndentedString(bayId)).append("\n");
+		sb.append("    ctId: ").append(toIndentedString(ctId)).append("\n");
 		sb.append("    waterId: ").append(toIndentedString(waterId)).append("\n");
 		sb.append("    elementId: ").append(toIndentedString(elementId)).append("\n");
 		sb.append("    elementValue: ").append(toIndentedString(elementValue)).append("\n");

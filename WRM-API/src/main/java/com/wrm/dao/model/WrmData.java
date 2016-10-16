@@ -20,8 +20,11 @@ public class WrmData {
 	@Column(name = "user_id")
 	private String userId = null;
 
-	@Column(name = "bay_id")
-	private String bayId = null;
+	@Column(name = "CT_id")
+	private String ctId = null;
+	
+	@Column(name = "group_id")
+	private String groupId = null;
 
 	@Column(name = "water_id")
 	private String waterId = null;
@@ -48,8 +51,9 @@ public class WrmData {
 	
 	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
 	private Date newTimeCreated = new Date();*/
-
 	
+	@Column(name = "bay_id")
+	private String bay_id = null;
 
 
 	public int getId() {
@@ -102,12 +106,12 @@ public class WrmData {
 		this.userId = userId;
 	}
 
-	public String getBayId() {
-		return bayId;
+	public String getCtId() {
+		return ctId;
 	}
 
-	public void setBayId(String bayId) {
-		this.bayId = bayId;
+	public void setCtId(String ctId) {
+		this.ctId = ctId;
 	}
 
 	public String getWaterId() {
@@ -126,6 +130,21 @@ public class WrmData {
 		this.elementId = elementId;
 	}
 	
+	public String getGroupId() {
+		return groupId;
+	}
+	
+	public void setGroupId(String groupId) {
+		this.groupId = groupId;
+	}
+	
+	public String getBayId() {
+		return bay_id;
+	}
+	
+	public void setBayId (String bayId) {
+		this.bay_id = bayId;
+	}
 	/*public Date getNewTimeCreated() {
 		return newTimeCreated;
 	}
@@ -144,8 +163,8 @@ public class WrmData {
 */
 	@Override
 	public String toString() {
-		return "WrmData [id=" + id + ", userId=" + userId + ", bayId=" + bayId + ", waterId=" + waterId + ", elementId="
-				+ elementId + ", elementValue=" + elementValue + ", criteria=" + criteria + ", timeCreated="
+		return "WrmData [id=" + id + ", userId=" + userId + ", ctId=" + ctId + ", waterId=" + waterId + ", elementId="
+				+ elementId + ", elementValue=" + elementValue + ", criteria=" + criteria + ", groupId=" + groupId + ", timeCreated="
 				+ timeCreated + ", timeUpdated=" + timeUpdated + "]";
 	}
 

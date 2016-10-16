@@ -26,6 +26,15 @@ public class BayDaoImpl extends DaoImpl implements DaoInterface<Bay, String> {
           + " LEFT OUTER JOIN element as Element on wt_elem_assoc.element_id = Element.id"
           + " where group_id = :groupId ";
 
+	private static final String FIND_ALL_ASSOCIATIONS_BY_USERID = 
+			"select Bay.name as ctId, Water.type as waterId, Element.name as elementId"
+          + " from ct_water_association as ct_wt_assoc"
+          + " LEFT OUTER JOIN ct as Bay on ct_wt_assoc.CT_ID = Bay.id and Bay.user_id = :userId "
+          + " LEFT OUTER JOIN water as Water on ct_wt_assoc.WATER_ID = Water.id "
+          + " LEFT OUTER JOIN water_element_association as wt_elem_assoc on ct_wt_assoc.WATER_ID = wt_elem_assoc.water_id "
+          + " LEFT OUTER JOIN element as Element on wt_elem_assoc.element_id = Element.id"
+          + " where user_id = :userId ";
+	
 	@Override
 	public String persist(Bay entity) {
 		getCurrentSessionWithTransaction().save(entity);
@@ -82,4 +91,14 @@ public class BayDaoImpl extends DaoImpl implements DaoInterface<Bay, String> {
 				.list();
 		return entities;
 	}
+
+	@SuppressWarnings("unchecked")
+	public List<BayWaterElementsResponse> findAllAssocByUserId(String userId) {
+		List<BayWaterElementsResponse> entities = (List<BayWaterElementsResponse>) getCurrentSessionWithTransaction().createSQLQuery(FIND_ALL_ASSOCIATIONS_BY_USERID)
+				.setParameter("userId", userId)
+				.setResultTransformer(Transformers.aliasToBean(BayWaterElementsResponse.class))
+				.list();
+		return entities;
+	}
+
 }

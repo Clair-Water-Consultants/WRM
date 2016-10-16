@@ -18,6 +18,8 @@ public class BayRequest   {
   private String name = null;
 
   private String groupId = null;
+  
+  private String userId = null;
 
   public BayRequest name(String name) {
     this.name = name;
@@ -41,6 +43,11 @@ public class BayRequest   {
     this.groupId = groupId;
     return this;
   }
+  
+  public BayRequest userId(String userId) {
+	  this.userId = userId;
+	  return this;
+  }
 
    /**
    * id of the group the bay belongs to
@@ -54,6 +61,15 @@ public class BayRequest   {
   public void setGroupId(String groupId) {
     this.groupId = groupId;
   }
+  
+  @ApiModelProperty(value = "id of the user the bay belongs to")
+  public String getUserId() {
+	  return userId;
+  }
+  
+  public void setUserId(String userId) {
+	  this.userId = userId;
+  }
 
 
   @Override
@@ -66,12 +82,13 @@ public class BayRequest   {
     }
     BayRequest bayRequest = (BayRequest) o;
     return Objects.equals(this.name, bayRequest.name) &&
-        Objects.equals(this.groupId, bayRequest.groupId);
+        Objects.equals(this.groupId, bayRequest.groupId) &&
+        Objects.equals(this.userId, bayRequest.userId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, groupId);
+    return Objects.hash(name, groupId, userId);
   }
 
   @Override
@@ -81,6 +98,7 @@ public class BayRequest   {
     
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    groupId: ").append(toIndentedString(groupId)).append("\n");
+    sb.append("    userId: ").append(toIndentedString(userId)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.wrm.dao.DaoInterface;
 import com.wrm.dao.impl.BayDaoImpl;
@@ -60,7 +61,7 @@ public class BaysApiController implements BaysApi {
 
 			@ApiParam(value = "request object of the bay", required = true) @RequestBody BayRequest body
 
-	) {
+			) {
 		Date date = Calendar.getInstance().getTime();
 		Bay b = new Bay();
 		b.setId(UUID.randomUUID().toString());
@@ -76,12 +77,18 @@ public class BaysApiController implements BaysApi {
 
 
 	public ResponseEntity<BayWaterElementsListResponse> watertypesGet(
-			@ApiParam(value = "", required = true) @PathVariable("groupId") String groupId) {
-		System.out.println("GroupID = " + groupId);
+			@ApiParam(value = "", required = true) @RequestParam("Id") String Id,
+			@ApiParam(value ="0", required = false) @RequestParam("category") String category) {
+		System.out.println("ID = " + Id);
 		BayDaoImpl bayDao = new BayDaoImpl();
 		List<BayWaterElementsResponse> assocList = new ArrayList<BayWaterElementsResponse>();
-				assocList = bayDao.findAllAssocByGroupId(groupId);
+		if(Boolean.parseBoolean(category) == true) {
+			assocList = bayDao.findAllAssocByGroupId(Id);
 
+		} else {
+			assocList = bayDao.findAllAssocByUserId(Id);
+		}
+		
 		BayWaterElementsListResponse response = new BayWaterElementsListResponse();
 		for (BayWaterElementsResponse w : assocList) {
 			System.out.println(w);

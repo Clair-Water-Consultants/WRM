@@ -33,6 +33,9 @@ public class User {
 	
 	@Column(name = "EMAIL_ID")
 	String emailId;
+	
+	@Column(name = "CATEGORY")
+	Boolean category;
 
 	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
 	@Column(name = "CREATED_TIME")
@@ -98,6 +101,14 @@ public class User {
 		this.emailId = emailId;
 	}
 
+	public Boolean getCategory() {
+		return category;
+	}
+	
+	public void setCategory(Boolean category) {
+		this.category = category;
+	}
+	
 	public Date getCreatedTime() {
 		return createdTime;
 	}
@@ -117,7 +128,8 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", pass=" + pass + ", groupId=" + groupId + ", firstName="
-				+ firstName + ", lastName=" + lastName + ", emailId=" + emailId + ", createdTime=" + createdTime
+				+ firstName + ", lastName=" + lastName + ", emailId=" + emailId + ", category=" + category
+				+ ", createdTime=" + createdTime
 				+ ", updatedTime=" + updatedTime + "]";
 	}
 	

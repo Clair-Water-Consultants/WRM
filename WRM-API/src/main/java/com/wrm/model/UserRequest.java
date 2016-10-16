@@ -27,6 +27,8 @@ public class UserRequest   {
   private String lastName = null;
 
   private String emailId = null;
+  
+  private Boolean category = false;
 
   private DateTime createdTime = null;
 
@@ -139,6 +141,15 @@ public class UserRequest   {
   public void setEmailId(String emailId) {
     this.emailId = emailId;
   }
+  
+  @ApiModelProperty(value = "category of the user")
+  public Boolean getCategory() {
+	  return category;
+  }
+  
+  public void setCategory(Boolean category) {
+	  this.category = category;
+  }
 
   public UserRequest createdTime(DateTime createdTime) {
     this.createdTime = createdTime;
@@ -192,13 +203,14 @@ public class UserRequest   {
         Objects.equals(this.firstName, userRequest.firstName) &&
         Objects.equals(this.lastName, userRequest.lastName) &&
         Objects.equals(this.emailId, userRequest.emailId) &&
+        Objects.equals(this.category, userRequest.category) &&
         Objects.equals(this.createdTime, userRequest.createdTime) &&
         Objects.equals(this.updatedTime, userRequest.updatedTime);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, pass, groupId, firstName, lastName, emailId, createdTime, updatedTime);
+    return Objects.hash(name, pass, groupId, firstName, lastName, emailId, category, createdTime, updatedTime);
   }
 
   @Override
@@ -212,6 +224,7 @@ public class UserRequest   {
     sb.append("    firstName: ").append(toIndentedString(firstName)).append("\n");
     sb.append("    lastName: ").append(toIndentedString(lastName)).append("\n");
     sb.append("    emailId: ").append(toIndentedString(emailId)).append("\n");
+    sb.append("    category: ").append(toIndentedString(category)).append("\n");
     sb.append("    createdTime: ").append(toIndentedString(createdTime)).append("\n");
     sb.append("    updatedTime: ").append(toIndentedString(updatedTime)).append("\n");
     sb.append("}");

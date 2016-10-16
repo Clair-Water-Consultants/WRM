@@ -1,5 +1,7 @@
 package com.wrm.api;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,19 +33,21 @@ public interface WrmdataApi {
 	ResponseEntity<WRMDataListResponse> wrmdataGroupIdGet(
 			@ApiParam(value = "", required = true) @PathVariable("groupId") String groupId
 
-	, @ApiParam(value = "", required = true) @RequestParam("userId") String userId
+			, @ApiParam(value = "", required = true) @RequestParam("userId") String userId
 
-	, @ApiParam(value = "", required = true) @RequestParam(value = "elementId", required = true) String elementId
+			, @ApiParam(value = "", required = true) @RequestParam(value = "elementId", required = true) String elementId
 
-	, @ApiParam(value = "", required = true) @RequestParam(value = "ctId", required = true) String ctId
+			, @ApiParam(value = "", required = true) @RequestParam(value = "ctId", required = true) String ctId
 
-	, @ApiParam(value = "", required = true) @RequestParam(value = "waterId", required = true) String waterId
+			, @ApiParam(value = "", required = true) @RequestParam(value = "waterId", required = true) String waterId
 
-	, @ApiParam(value = "") @RequestParam(value = "granularity", required = false) String granularity
+			, @ApiParam(value = "") @RequestParam(value = "granularity", required = false) String granularity
 
-	, @ApiParam(value = "") @RequestParam(value = "timeperiod", required = false) String timeperiod
+			, @ApiParam(value = "") @RequestParam(value = "timeperiod", required = false) String timeperiod
 
-	);
+			, @ApiParam(value = "0") @RequestParam(value = "category", required = true) String category
+
+			);
 
 	@ApiOperation(value = "Add a wrm data type", notes = "This endpint adds a new wrm data type to the system. It accepts a json which would include wrm data type name, description and would return a unique identifier of the wrm data type upon success ", response = WRMDataPostResponse.class, tags = {
 			"WRMData", })
@@ -51,11 +55,11 @@ public interface WrmdataApi {
 			@ApiResponse(code = 201, message = "upon successful creation of a wrmdata type", response = WRMDataPostResponse.class),
 			@ApiResponse(code = 200, message = "upon error", response = WRMDataPostResponse.class) })
 	@RequestMapping(value = "/wrmdata", produces = { "application/json" }, consumes = {
-			"application/json" }, method = RequestMethod.POST)
-	ResponseEntity<WRMDataPostResponse> wrmdataPost(
+	"application/json" }, method = RequestMethod.POST)
+	ResponseEntity<WRMDataPostResponse> wrmdataPost(HttpServletRequest req,
 
 			@ApiParam(value = "request object of the wrmdata type", required = true) @RequestBody WRMDataRequest body
 
-	);
+			);
 
 }

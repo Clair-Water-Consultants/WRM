@@ -36,6 +36,15 @@ public interface UserApi {
     		@ApiParam(value = "", required = true) @RequestParam(value = "userId", required = true) String userId
     		);
     
+    @ApiOperation(value = "WRM user table get request", notes = "This end point is used to perform user related activities of WRM ", response = UserListResponse.class, tags={ "User", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "An array of users", response = UserListResponse.class),
+        @ApiResponse(code = 200, message = "upon error", response = UserListResponse.class) })
+    @RequestMapping(value = "/userDetails",
+        produces = { "application/json" }, 
+        method = RequestMethod.GET)
+    ResponseEntity<UserListResponse> userDetailsGet(HttpServletRequest req);
+    
     @ApiOperation(value = "WRM user find All get request", notes = "This end point is used to perform user related activities of WRM ", response = UserListResponse.class, tags={ "User", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "An array of users", response = UserListResponse.class),

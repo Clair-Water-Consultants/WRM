@@ -21,6 +21,9 @@ public class Bay {
 	
 	@Column(name = "GROUP_ID")
 	String groupId;
+	
+	@Column(name = "USER_ID")
+	String userId;
 
 	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
 	@Column(name = "CREATED_TIME")
@@ -53,6 +56,14 @@ public class Bay {
 	public void setGroupId(String groupId) {
 		this.groupId = groupId;
 	}
+	
+	public String getUserId() {
+		return userId;
+	}
+	
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 
 	public Date getCreatedTime() {
 		return createdTime;
@@ -72,7 +83,8 @@ public class Bay {
 
 	@Override
 	public String toString() {
-		return "Bay [id=" + id + ", name=" + name + ", groupId=" + groupId + ", createdTime=" + createdTime
+		return "Bay [id=" + id + ", name=" + name + ", groupId=" + groupId + ", userId=" + userId
+				+ ", createdTime=" + createdTime
 				+ ", updatedTime=" + updatedTime + "]";
 	}
 }

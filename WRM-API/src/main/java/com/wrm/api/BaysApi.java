@@ -38,9 +38,10 @@ public interface BaysApi {
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "An array of elements", response = BayWaterElementsListResponse.class),
 			@ApiResponse(code = 200, message = "upon error", response = WaterTypeListResponse.class) })
-	@RequestMapping(value = "/association/{groupId}", produces = { "application/json" }, method = RequestMethod.GET)
+	@RequestMapping(value = "/association", produces = { "application/json" }, method = RequestMethod.GET)
 	ResponseEntity<BayWaterElementsListResponse> watertypesGet(
-			@ApiParam(value = "", required = true) @PathVariable("groupId") String groupId
+			@ApiParam(value = "", required = true) @PathVariable("Id") String Id,
+			@ApiParam(value = "", required = false) @RequestParam("category") String category
 
 	);
 

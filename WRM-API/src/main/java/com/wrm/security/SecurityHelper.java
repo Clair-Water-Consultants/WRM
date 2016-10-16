@@ -51,15 +51,19 @@ public class SecurityHelper {
 	public static final int HASH_SIZE_INDEX = 2;
 	public static final int SALT_INDEX = 3;
 	public static final int PBKDF2_INDEX = 4;
-	
+
 	private static String createToken(String userId, String groupId, String agentHost, Long lastLoggedInTime) {
 		return userId + "|" + groupId + "|" + agentHost + "|" + String.valueOf(lastLoggedInTime);
 	}
-	
+
 	public static boolean validateToken(String userId, String groupId, String agentHost, Long lastLoggedInTime, String activeToken) {
-		return createToken(userId, groupId, agentHost, lastLoggedInTime).equalsIgnoreCase(new String(fromBase64(activeToken)));
+		//return toBase64(createToken(userId, groupId, agentHost, lastLoggedInTime).getBytes()).equalsIgnoreCase(new String(fromBase64(activeToken)));
+		String token1 = toBase64(createToken(userId, groupId, agentHost, lastLoggedInTime).getBytes());
+		String token2 = activeToken;
+		System.out.println(token1 + "........." + token2);
+		return token1.equalsIgnoreCase(token2);
 	}
-	
+
 	public static String parseSessionToken(String sessionToken) {
 		return new String(fromBase64(sessionToken));
 	}
@@ -68,7 +72,7 @@ public class SecurityHelper {
 		String token = createToken(userId, groupId, agentHost, lastLoggedInTime);
 		return toBase64(token.getBytes());
 	}
-	
+
 	public static String createHash(String password) throws CannotPerformOperationException {
 		return createHash(password.toCharArray());
 	}
