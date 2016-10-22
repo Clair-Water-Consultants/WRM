@@ -159,7 +159,7 @@ public class WrmdataApiController implements WrmdataApi {
 		WrmDataDaoImpl dao = new WrmDataDaoImpl();
 		//dao.persist(daoModel);
 		dao.insertWrmData(daoModel);
-		WrmDataDaoImpl.closeCurrentSessionWithTransaction();
+		//WrmDataDaoImpl.closeCurrentSessionWithTransaction();
 		return ResponseEntity.ok(new WRMDataPostResponse("Success"));
 	}
 

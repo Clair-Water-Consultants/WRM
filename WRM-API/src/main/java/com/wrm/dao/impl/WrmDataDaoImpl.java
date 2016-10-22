@@ -2,6 +2,8 @@ package com.wrm.dao.impl;
 
 import java.util.List;
 
+import org.hibernate.CacheMode;
+import org.hibernate.Session;
 import org.hibernate.transform.Transformers;
 
 import com.wrm.dao.DaoImpl;
@@ -288,7 +290,10 @@ public class WrmDataDaoImpl extends DaoImpl implements DaoInterface<WrmData, Str
 	@SuppressWarnings("unchecked")
 	public void insertWrmData(WrmData entity) {
 		System.out.println(entity.toString());
-		getCurrentSessionWithTransaction().createSQLQuery(INSERT_WRMDATA)
+		Session session = DaoImpl.getSessionFactory().openSession();
+		session.setCacheMode(CacheMode.REFRESH);
+		session.beginTransaction();
+		session.createSQLQuery(INSERT_WRMDATA)
 		//.setParameter("id",entity.getId())
 		.setParameter("ctId",entity.getCtId())
 		.setParameter("userId",entity.getUserId())
@@ -301,6 +306,9 @@ public class WrmDataDaoImpl extends DaoImpl implements DaoInterface<WrmData, Str
 		.setParameter("groupId",entity.getGroupId())
 		.setParameter("bayId",null)
 		.executeUpdate();
+		//session.save(entity);
+		session.getTransaction().commit();
+		session.close();
 
 	}
 
